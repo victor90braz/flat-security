@@ -43,7 +43,7 @@ npm --version 10.0.0
 ### Clone the Repository:
 
 ```bash
-git clone https://github.com/victor90braz/flat.git
+git clone https://github.com/victor90braz/flat-security
 ```
 
 ## Database Connection
@@ -54,7 +54,7 @@ Update your `.env` file with the appropriate database connection details:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=flat
+DB_DATABASE=flat-security
 DB_USERNAME=root
 DB_PASSWORD=
 ```

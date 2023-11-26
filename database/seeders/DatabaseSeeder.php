@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Flat;
+use Database\Factories\CategoryFactory;
 use Database\Factories\CommentFactory;
 use Database\Factories\FlatFactory;
 use Database\Factories\UserFactory;
@@ -11,13 +13,17 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        UserFactory::new()->create([
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+        $user = UserFactory::new()->create();
+
+        FlatFactory::new()->count(10)->create([
+            'user_id' => $user->id,
         ]);
 
-        FlatFactory::new()->count(10)->create();
+        CommentFactory::new()->count(10)->create([
+            'user_id' => $user->id,
+            'flat_id' => fn () => Flat::inRandomOrder()->first()->id,
+        ]);
 
-        CommentFactory::new()->count(10)->create();
+        CategoryFactory::new()->count(10)->create();
     }
 }
