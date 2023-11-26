@@ -36,12 +36,14 @@ class Flat extends Model
 
     public function scopeFilter($query, array $filters)
     {
-
-        if($filters['search'] ?? null) {
+        if ($filters['search'] ?? null) {
             $query
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('price', 'like', '%' . request('search') . '%')
-            ->orWhere('description', 'like', '%' . request('search') . '%');
+                ->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('price', 'like', '%' . request('search') . '%')
+                ->orWhere('description', 'like', '%' . request('search') . '%')
+                ->orWhereHas('category', fn ($query) =>
+                    $query->where('name', 'like', '%' . request('search') . '%')
+                );
         }
 
         return $query;
