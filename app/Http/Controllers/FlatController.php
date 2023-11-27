@@ -60,13 +60,14 @@ class FlatController extends Controller
         if ($flat) {
             return redirect('/')->with('success', 'New flat created');
         } else {
-            // Log the error or handle it accordingly
             return redirect('/')->with('error', 'Failed to create a new flat');
         }
     }
 
     public function edit(Flat $flat): View
     {
+        $this->authorize('update-flat', $flat);
+
         return view('pages.flats.edit', [
             'flat' => $flat,
         ]);
@@ -74,6 +75,8 @@ class FlatController extends Controller
 
     public function update(Flat $flat, StoreFlatRequest $request): RedirectResponse
     {
+        $this->authorize('update-flat', $flat);
+
         $flat->update($request->validated());
 
         return redirect('/')->with('success', 'Flat updated successfully!');
