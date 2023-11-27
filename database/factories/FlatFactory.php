@@ -22,7 +22,6 @@ class FlatFactory extends Factory
             'price' => $this->faker->randomNumber(4),
             'description' => $this->faker->paragraph(),
             'location' => $this->faker->city,
-            'slug' => Str::slug($this->faker->sentence),
             'category_id' => Category::factory()->create()->id,
         ];
     }

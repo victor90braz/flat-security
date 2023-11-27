@@ -9,7 +9,6 @@ return new class extends Migration {
     {
         Schema::create('flats', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
             $table->foreignId('category_id')->default(1);
             $table->foreignId('user_id')->constrained('users');
             $table->string('title');
