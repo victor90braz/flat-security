@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rules;
 class RegisterController extends Controller
 {
     public function create() {
@@ -13,14 +13,22 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $attributes = $request->validate([
-            'name' => ['required', 'max:191'],
-            'email' => ['required', 'email', 'max:191'],
-            'password' => ['required', 'min:7', 'max:191']
+        $validator = $request->validate([
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'max:191', 'email', 'unique:users'],
+            'password' => ['required', 'string', Rules\Password::default()]
         ]);
 
-        (new User())->create($attributes);
-
-        return redirect('/login')->with('success', 'Registration successful!');
+        if ($validator) {
+            try {
+                (new User())->create($validator);
+                return redirect('/login')->with('success', 'Registration successful!');
+            } catch (\Exception $e) {
+                return back()->withErrors(['message' => 'Registration failed. Please try again.']);
+            }
+        } else {
+            return back()->withErrors($validator)->withInput();
+        }
     }
+
 }
