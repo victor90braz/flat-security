@@ -21,6 +21,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Password::defaults(fn () => Password::min(7));
+        Password::defaults(fn () =>
+            Password::min(8)
+            ->numbers()
+            ->mixedCase()
+            ->symbols()
+        );
     }
 }
