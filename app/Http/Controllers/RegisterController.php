@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception; // Import the Exception class
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -11,12 +11,12 @@ class RegisterController extends Controller
         return view("pages.register.create");
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $attributes = request()->validate([
-            'name' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'password' => ['required', 'min:7', 'max:255']
+        $attributes = $request->validate([
+            'name' => ['required', 'max:191'],
+            'email' => ['required', 'email', 'max:191'],
+            'password' => ['required', 'min:7', 'max:191']
         ]);
 
         (new User())->create($attributes);
