@@ -51,8 +51,7 @@
                 {{ $flats->links() }}
             </div>
         @else
-            <p>No flats found.</p>
+            @include('layouts.components.error404')
         @endif
     </main>
-
 @endsection

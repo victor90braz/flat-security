@@ -25,6 +25,6 @@
             {{ $flats->links() }}
         </div>
     @else
-        <p class="ml-4">No flats found.</p>
+        @include('layouts.components.error404')
     @endif
 @endsection
